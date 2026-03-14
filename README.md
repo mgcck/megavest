@@ -19,7 +19,7 @@ In other words, it's your backup payment option when you get banned and/or your 
 ## FAQ
 - Is it subject to payment processor pressure? - No, it runs on crypto, payments are in USDC.
 - How much? - Free of charge, but you pay with your time. You will have to set it up yourself.
-- What's your commission? - Zero, I don't profit from it, so donate if you feel that this project makes sense.(Go to 'Support this project' section)
+- What's your commission? - Zero, I don't profit from it.
 - Can I modify it? - Yes, the code is open-source, do what you want with it.
 - I need support to set it up - Well, that's a tricky one. I have tons of other projects, and since I don't really profit from this one, I can't spend much time helping everyone.
 - Is it self-hosted? - It's hosted under your accounts (Amazon + Cloudflare), this setup has no monthly fees.
@@ -210,7 +210,7 @@ Parameter TokenDecimals [6]:
 
 Parameter SolanaRpcUrl [https://api.mainnet-beta.solana.com]: 
 
-Parameter CorsAllowOrigin [*]: CHANGE THIS TO YOUR WEBSITE https://thefallofgaladriel.pages.dev/
+Parameter CorsAllowOrigin [*]: CHANGE THIS TO YOUR WEBSITE https://thecoolestgameever.pages.dev
 
 Parameter OrderTtlMinutes [30]: 
 
