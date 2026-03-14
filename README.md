@@ -30,6 +30,7 @@ Here is how your final webpage can look like: https://thecoolestgameever.pages.d
 - If a user pays me 10 bucks, how much do I get? - 9.99 bucks, or around that value. USDC has small transaction fees.
 - My users have USDC, but can't pay! - Check if they have SOL. USDC payments require some SOL in their account to make the payment.
 - Are contributions welcome? - Yep.
+- People say crypto is private. Is that true? - Nope, not really. The network is visible to everyone, so anyone can check which wallet sent money to which other wallet. No names, of course, just wallet addresses. So don’t do stupid stuff, and don’t try to sell anything illegal.
 
 Simple flow:
 1. User clicks **Buy** on your Cloudflare Pages site.
