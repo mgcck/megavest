@@ -16,6 +16,10 @@ In other words, it's your backup payment option when you get banned and/or your 
   </a>
 </p>
 
+Here is how your final webpage can look like: https://thecoolestgameever.pages.dev/ . Ofc, you can change the design, all the frontend files are in docs folder.
+![Page example](./assets/example.png)
+
+
 ## FAQ
 - Is it subject to payment processor pressure? - No, it runs on crypto, payments are in USDC.
 - How much? - Free of charge, but you pay with your time. You will have to set it up yourself.
