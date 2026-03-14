@@ -1,6 +1,6 @@
 # Megavest - DIY kit for building simple crypto storefront (Cloudflare Pages + AWS Lambda + Solana)
 
-Dark times are coming, my fellow indie devs. Game stores change their TOS whenever they like, and one day any one of us can wake up to find our creations removed. The reason is often payment processor pressure. In addition to that risk in some countries, VISA/Mastercard simply do not work, so our loyal subscribers get cut off and are forced to pirate games.
+Dark times are coming, my fellow indie devs. Game stores change their TOS whenever they like, and one day any one of us can wake up to find our creations removed. The reason is often payment processor pressure. In addition to that risk, in some countries VISA/Mastercard simply do not work, so our loyal subscribers get cut off and are forced to pirate games.
 
 Is there any solution to that? Can an ordinary dev do something about it? My answer to that is Megavest.
 
