@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Checkout</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+
+    <main class="page">
+      <section class="card hero fade-up">
+        <div class="cover-panel">
+          <div class="cover-frame">
+            <img id="cover-image" class="cover-image hidden" alt="Product cover" />
+            <div id="cover-fallback" class="cover-fallback">
+              <span>Cover Preview</span>
+              <p>Add a <code>coverImageUrl</code> in docs/config.js</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-content">
+          <p id="product-eyebrow" class="eyebrow">Digital Download</p>
+          <h1 id="product-name">My Game</h1>
+          <p id="product-tagline" class="tagline">A striking game world waiting behind one click.</p>
+          <p id="product-description" class="description">
+            Add your product story here so players understand what they are buying before checkout.
+          </p>
+
+          <ul id="highlights-list" class="highlights-list"></ul>
+
+          <div class="purchase-row">
+            <p class="price"><span id="price-amount">5</span> USDC</p>
+            <button id="buy-btn" class="buy-btn">Buy Now</button>
+          </div>
+          <p id="status" class="status">Ready to purchase.</p>
+        </div>
+      </section>
+
+      <section class="card fade-up delay-1">
+        <h2>What You Get</h2>
+        <ul id="details-list" class="details-list"></ul>
+      </section>
+
+      <section id="payment-section" class="card hidden fade-up delay-2">
+        <h2>1. Pay With USDC (Solana)</h2>
+        <div id="qr-wrapper"></div>
+        <p class="small-text">Scan QR in Phantom, Backpack, or Solflare.</p>
+        <a id="solana-link" href="#" class="solana-link" target="_blank" rel="noreferrer">Open payment link</a>
+      </section>
+
+      <section id="claim-section" class="card hidden fade-up delay-2">
+        <h2>2. Claim Your Download</h2>
+        <button id="claim-btn" class="claim-btn" disabled>Get Link</button>
+        <p id="download-holder" class="download-holder"></p>
+      </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="./config.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.pyc
+
+# AWS SAM
+.aws-sam/
+backend/samconfig.toml
+backend/y
+backend/Y
+backend/n
+backend/N
+# Env files
+.env

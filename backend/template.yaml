@@ -1,0 +1,154 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Simple Solana checkout backend for static storefronts
+
+Parameters:
+  MerchantWallet:
+    Type: String
+    Description: Wallet address that receives USDC (SPL token) payments
+  ProductLink:
+    Type: String
+    Description: Download link shown after payment (for example, your MEGA folder URL)
+  ProductName:
+    Type: String
+    Default: My Game
+    Description: Product name shown in Solana Pay metadata
+  PriceUsdc:
+    Type: String
+    Default: '5'
+    Description: Price in USDC
+  SplTokenMint:
+    Type: String
+    Default: EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
+    Description: SPL token mint address used for payments (mainnet USDC by default)
+  TokenDecimals:
+    Type: Number
+    Default: 6
+    Description: Decimal precision for the SPL token (USDC is 6)
+  SolanaRpcUrl:
+    Type: String
+    Default: https://api.mainnet-beta.solana.com
+    Description: RPC endpoint used for payment checks
+  CorsAllowOrigin:
+    Type: String
+    Default: '*'
+    Description: Allowed CORS origin for frontend calls
+  OrderTtlMinutes:
+    Type: Number
+    Default: 30
+    Description: How long an order stays payable
+
+Globals:
+  Function:
+    Runtime: python3.10
+    Timeout: 15
+    MemorySize: 256
+    CodeUri: .
+    Environment:
+      Variables:
+        ORDERS_TABLE: !Ref OrdersTable
+        MERCHANT_WALLET: !Ref MerchantWallet
+        PRODUCT_LINK: !Ref ProductLink
+        PRODUCT_NAME: !Ref ProductName
+        PRICE_USDC: !Ref PriceUsdc
+        SPL_TOKEN_MINT: !Ref SplTokenMint
+        TOKEN_DECIMALS: !Ref TokenDecimals
+        SOLANA_RPC_URL: !Ref SolanaRpcUrl
+        CORS_ALLOW_ORIGIN: !Ref CorsAllowOrigin
+        ORDER_TTL_MINUTES: !Ref OrderTtlMinutes
+
+Resources:
+  OrdersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: order_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: order_id
+          KeyType: HASH
+      TimeToLiveSpecification:
+        AttributeName: ttl_epoch
+        Enabled: true
+
+  StoreApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins:
+          - !Ref CorsAllowOrigin
+        AllowHeaders:
+          - Content-Type
+        AllowMethods:
+          - GET
+          - POST
+          - OPTIONS
+
+  CreateOrderFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: lambdas.create_order.app.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref OrdersTable
+      Events:
+        CreateOrderPost:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref StoreApi
+            Path: /create-order
+            Method: POST
+
+  CheckPaymentFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: lambdas.check_payment.app.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref OrdersTable
+      Events:
+        CheckPaymentGet:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref StoreApi
+            Path: /check-payment
+            Method: GET
+
+  ClaimLinkFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: lambdas.claim_link.app.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref OrdersTable
+      Events:
+        ClaimLinkGet:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref StoreApi
+            Path: /claim-link
+            Method: GET
+
+  StorefrontConfigFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: lambdas.get_storefront.app.lambda_handler
+      Events:
+        StorefrontConfigGet:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref StoreApi
+            Path: /storefront-config
+            Method: GET
+
+Outputs:
+  ApiBaseUrl:
+    Description: Base URL for your frontend config
+    Value: !Sub https://${StoreApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}
+  StorefrontConfigUrl:
+    Description: Endpoint returning public storefront settings
+    Value: !Sub https://${StoreApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/storefront-config
+  OrdersTableName:
+    Description: DynamoDB table storing orders
+    Value: !Ref OrdersTable
