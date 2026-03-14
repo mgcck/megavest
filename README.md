@@ -51,7 +51,9 @@ Simple flow:
 - register cloudflare account.
 - set-up USDC Solana wallet, I use Phantom wallet.
 - check your wallet address, it will be needed later.
+   
 ![Wallet addres](./assets/phantomwallet.png)
+
 ![Wallet addres](./assets/phantomwallet1.png)
 
 
